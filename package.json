@@ -28,6 +28,7 @@
     "nomnom": "^1.8.1"
   },
   "devDependencies": {
+    "coveralls": "^2.11.2",
     "istanbul": "^0.3.2",
     "jsdoc": "3.3.0-alpha10",
     "jshint": "^2.5.10",
