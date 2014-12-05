@@ -81,8 +81,8 @@ This software is licensed under the **BSD-3-Clause License**. See the [LICENSE](
 
 [npm-badge]: https://badge.fury.io/js/ledctl.svg
 [npm-url]: https://npmjs.org/package/ledctl
-[travis-badge]: https://travis-ci.org/BeBe/ledctl.svg
-[travis-url]: http://travis-ci.org/BeBe/ledctl
-[coveralls-badge]: https://coveralls.io/repos/BeBe/ledctl/badge.png?branch=develop
-[coveralls-url]: https://coveralls.io/r/BeBe/ledctl
+[travis-badge]: https://travis-ci.org/Dreamscapes/ledctl.svg
+[travis-url]: http://travis-ci.org/Dreamscapes/ledctl
+[coveralls-badge]: https://coveralls.io/repos/Dreamscapes/ledctl/badge.png?branch=develop
+[coveralls-url]: https://coveralls.io/r/Dreamscapes/ledctl
 [make-badge]: https://img.shields.io/badge/built%20with-GNU%20Make-brightgreen.svg
