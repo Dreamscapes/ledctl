@@ -9,7 +9,8 @@ after_success:
 deploy:
   provider: npm
   email: rr.rossmann@gmail.com
-  api_key: -YOUR API KEY-
+  api_key:
+    secure: fU0jT6FFZJyJKZ4h7bQM1A4NTV7cAEkqBQv0XDVsXKjHTY8vtQBfHiUTAYY/i1rQor3pFZBUHeDQ9hoRwhnVXR5Ds03wNBxu3ezQsTM9cTRPn4ZvgPjaPKEhkhM/GqL2Mz7S00XK8AzQZeBjHTOjRMEtAfRPZmPn0AyNWCMulnU=
   on:
     tags: true
     node: '0.10'
