@@ -20,7 +20,7 @@
     "linux"
   ],
   "scripts": {
-    "test": "mocha --reporter spec --require should"
+    "test": "make lint test"
   },
   "dependencies": {
     "async": "^0.9.0",
