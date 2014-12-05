@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Index</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jaguar.css">
+    
+    
+    <script>
+    var config = {"monospaceLinks":true,"cleverLinks":true,"default":{"outputSourceFiles":true},"applicationName":"Dreamscapes\\Ledctl","googleAnalytics":"","linenums":true};
+    </script>
+    
+
+    
+</head>
+<body>
+<div id="wrap" class="clearfix">
+    
+<div class="navigation">
+    <h3 class="applicationName"><a href="index.html">Dreamscapes\Ledctl</a></h3>
+
+    <div class="search">
+        <input id="search" type="text" class="form-control input-sm" placeholder="Search Documentations">
+    </div>
+    <ul class="list">
+    
+        <li class="item" data-name="LEDController">
+            <span class="title">
+                <a href="LEDController.html">LEDController</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li data-name="LEDController.RATE"><a href="LEDController.html#RATE">RATE</a></li>
+            
+                <li data-name="LEDController.ROOT"><a href="LEDController.html#ROOT">ROOT</a></li>
+            
+                <li data-name="LEDController#brightness"><a href="LEDController.html#brightness">brightness</a></li>
+            
+                <li data-name="LEDController#id"><a href="LEDController.html#id">id</a></li>
+            
+                <li data-name="LEDController#location"><a href="LEDController.html#location">location</a></li>
+            
+                <li data-name="LEDController#triggers"><a href="LEDController.html#triggers">triggers</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            <span class="subtitle">Typedefs</span>
+            
+                <li data-name="LEDController.Blink"><a href="LEDController.html#Blink">Blink</a></li>
+            
+                <li data-name="LEDController.Parser"><a href="LEDController.html#Parser">Parser</a></li>
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="LEDController.discover"><a href="LEDController.html#discover">discover</a></li>
+            
+                <li data-name="LEDController.register"><a href="LEDController.html#register">register</a></li>
+            
+                <li data-name="LEDController#blink"><a href="LEDController.html#blink">blink</a></li>
+            
+                <li data-name="LEDController#morse"><a href="LEDController.html#morse">morse</a></li>
+            
+                <li data-name="LEDController#reset"><a href="LEDController.html#reset">reset</a></li>
+            
+                <li data-name="LEDController#trigger"><a href="LEDController.html#trigger">trigger</a></li>
+            
+                <li data-name="LEDController#turnOff"><a href="LEDController.html#turnOff">turnOff</a></li>
+            
+                <li data-name="LEDController#turnOn"><a href="LEDController.html#turnOn">turnOn</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+    </ul>
+</div>
+    <div class="main">
+        <h1 class="page-title" data-filename="index.html">Index</h1>
+        
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article class="readme"><h1>ledctl</h1><p><a href="https://npmjs.org/package/ledctl"><img src="https://badge.fury.io/js/ledctl.svg" alt="NPM Version"></a>
+<a href="https://travis-ci.org/Dreamscapes/ledctl"><img src="https://travis-ci.org/Dreamscapes/ledctl.svg" alt="Build Status"></a>
+<a href="https://coveralls.io/r/Dreamscapes/ledctl"><img src="https://img.shields.io/coveralls/Dreamscapes/ledctl.svg" alt="Coverage Status"></a>
+<img src="https://img.shields.io/badge/built%20with-GNU%20Make-brightgreen.svg" alt="Built with GNU Make"></p>
+<blockquote>
+<p>Control your LEDs from Node.js</p>
+</blockquote>
+<p>This module allows you to take control of your LEDs on whatever board you are running it, as long as the board has some LEDs that can be controlled (and the OS is aware of them).</p>
+<p>I wanted to push my limits a little so even though it seems a trivial task to turn a light on/off, I implemented this thing with almost scientific precision - floating-point timing accuracy, race condition prevention, filesystem operations queueing, excellent error handling etc. but not at the cost of usability and simplicity. Simply put, I had a blast writing this and I hope you enjoy it, too! :)</p>
+<p>Currently you can:</p>
+<ul>
+<li>[x] Discover available LEDs on your system</li>
+<li>[x] Turn on/off the LEDs</li>
+<li>[x] Change the LED's trigger settings</li>
+<li>[x] Blink the LEDs</li>
+<li>[x] Make your LEDs blink in morse code!</li>
+<li>[ ] Monitor the progress of the blink events via event listeners (considering)</li>
+<li>[ ] Control your LEDs from the terminal (planned)</li>
+</ul>
+<h2>Installation Instructions</h2><p>Install the module via npm: <code>npm install ledctl</code></p>
+<h2>Requirements</h2><p>Currently only Linux-based operating systems are known to be supported. PRs are always welcome if you discover more operating systems where LEDs are exposed via the filesystem (usually in <em>/sys/class/leds</em> but this can be overriden if the OS uses a different path).</p>
+<p>I am aware of Raspberry-Pi, Banana-Pi and BeagleBone having user-controllable LEDs, but I am quite sure there's many more.</p>
+<h2>Usage</h2><p>Here's a crash course. I suggest you read the API docs afterwards - it contains all the information you may need to work with this library.</p>
+<p>A quick hint - all callbacks are optional. However, if there's a problem writing to the LED's sysfs filesystem the function will throw on you.</p>
+<p><strong>Great benefit</strong> of this library is that you can simply chain calls to the LED however you wish and all the blinks will be queued and processed in the order you wanted - there's <strong>no need to introduce a callback hell</strong> just to blink out <em>SOS</em> in morse code.</p>
+<pre class="prettyprint source lang-js"><code>var LEDController = require('ledctl')
+
+// Which LEDs can be controlled?
+console.log(LEDController.discover())
+
+var led = new LEDController('green')
+led.turnOn() // It should be on!
+led.blink() // It should blink for 500ms by default
+led.blink(
+// Everything below is optional - these values represent defaults
+// (except rate - rate defaults to 1)
+  { for: 50 // percent of total blink time
+    of: 1000 // milliseconds (total blink time)
+    rate: 2 // Make it all twice as fast
+  }
+)
+
+// Holy grail
+led.morse('sos') // Watch the awesomeness!</code></pre><h2>Extending the API</h2><p>You may want to implement your own method that takes arbitrary input and generates (or not) photons via your LED! For example, you may want to take a Buffer and turn the LED on every time the bit changes... Or take a string and blink when there's a vowel... Or whatever - you can do it all!</p>
+<p>It's rather simple - first, you need to write your <strong>serialiser</strong>. A serialiser takes two arguments - an input value (this is what should be converted to blink events - most likely some kind of string) and a callback function which you should call with an optional Error object (or null if no error) and an array of <em>Blink</em> events.</p>
+<p>I highly suggest that you take a look at how the morse code method is implemented in <em>serialisers/morse.js</em>.</p>
+<h2>Documentation</h2><p>Documentation is available at http://dreamscapes.github.io/ledctl</p>
+<p>To generate documentation locally, run <code>make docs</code> from the repository's root.</p>
+<h2>License</h2><p>This software is licensed under the <strong>BSD-3-Clause License</strong>. See the <a href="LICENSE">LICENSE</a> file for more information.</p></article>
+    </section>
+
+
+
+
+
+
+        
+
+        <footer>
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha10</a> on Sun Dec 07 2014 02:17:02 GMT+0000 (UTC)
+        </footer>
+    </div>
+</div>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>
