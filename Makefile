@@ -103,4 +103,4 @@ clean-gh-pages:
 # Delete all generated files
 clean: clean-docs clean-coverage clean-gh-pages
 
-.PHONY: install lint test coveralls gh-pages bench clean-docs clean-coverage clean-gh-pages clean
+.PHONY: install lint test coveralls gh-pages clean-docs clean-coverage clean-gh-pages clean
