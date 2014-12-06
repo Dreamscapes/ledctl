@@ -17,6 +17,7 @@
 
 var fs = require('fs')
   , path = require('path')
+  , domain = require('domain')
   , LEDController = require('../lib/ledcontroller')
 // List of some triggers usually found on LEDs
   , knownTriggers =
@@ -330,6 +331,24 @@ describe('LEDController', function () {
         err.message.should.containEql('something')
 
         done()
+      })
+    })
+
+    it('should throw on error when no callback given', function (done) {
+      // Warning - fragile test! If it fails, it crashes the whole test suite. Not sure what
+      // exactly is going on or how to fix it... Just FYI.
+      var d = domain.create()
+
+      d.on('error', function (err) {
+        err.should.be.an.Error
+        err.message.should.containEql('Unsupported trigger')
+
+        d.dispose()
+        done()
+      })
+
+      d.run(function () {
+        ledGreen.trigger('something')
       })
     })
   })
