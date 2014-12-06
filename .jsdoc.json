@@ -1,0 +1,17 @@
+{
+  "plugins": ["plugins/markdown"],
+  "templates": {
+    "cleverLinks": true,
+    "monospaceLinks": true,
+    "default": {
+      "outputSourceFiles": true
+    },
+    "applicationName": "Dreamscapes\\Ledctl",
+    "googleAnalytics": "",
+    "linenums": true
+  },
+  "markdown": {
+    "parser": "gfm",
+    "hardwrap": true
+  }
+}
