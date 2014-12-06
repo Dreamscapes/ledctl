@@ -76,6 +76,24 @@ describe('LEDController', function () {
     }).should.throw()
   })
 
+  it('should not throw when only one LED is available and no identifier given', function () {
+    // Monkey-patching
+    var discoverFunc = LEDController.discover
+    LEDController.discover = function () {
+      return ['green:led0']   // Only one LED available on this system...
+    }
+
+    try {
+      led = new LEDController()
+    } catch (e) {
+      LEDController.discover = discoverFunc
+      throw e
+    }
+
+    LEDController.discover = discoverFunc
+    led.id.should.equal('green:led0')
+  })
+
   it('should have property RATE equal to 1', function () {
     LEDController.RATE.should.equal(1)
   })
