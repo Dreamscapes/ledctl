@@ -78,8 +78,8 @@ jsdoc-template:
 gh-pages: clean-gh-pages docs
 ifeq ($(NODE_V), $(GH_NODE))  # Only deploy to gh-pages when node version meets requirements
 	@# The commit message when updating gh-pages
-	$(eval COMMIT_MSG := $(if ${TRAVIS_COMMIT},\
-		"Updated gh-pages from ${TRAVIS_COMMIT}",\
+	$(eval COMMIT_MSG := $(if ${TRAVIS},\
+		"Updated gh-pages from Travis build ${TRAVIS_JOB_NUMBER}",\
 		"Updated gh-pages manually"))
 
 	@git clone --branch=$(GHPDIR) \
