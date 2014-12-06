@@ -12,3 +12,4 @@ npm-debug.log
 # Project-specific excludes
 docs
 coverage
+gh-pages
