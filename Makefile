@@ -10,10 +10,13 @@
 
 # Helper vars
 BIN = node_modules/.bin/
+NODE_V = $(shell node -v | cut -f1,2 -d".")
 
 # Project-specific information
 GH_USER = Alaneor
 GH_REPO = dreamscapes/ledctl
+# Only deploy to gh-pages from node 0.10
+GH_NODE = v0.10
 
 # Project-specific paths
 LIBDIR = lib
@@ -66,6 +69,7 @@ docs:
 
 # Update gh-pages branch with new docs
 gh-pages: clean-gh-pages docs
+ifeq ($(NODE_V), $(GH_NODE))  # Only deploy to gh-pages when node version meets requirements
 	@# The commit message when updating gh-pages
 	$(eval COMMIT_MSG := $(if ${TRAVIS_COMMIT},\
 		"Updated gh-pages from ${TRAVIS_COMMIT}",\
@@ -80,6 +84,9 @@ gh-pages: clean-gh-pages docs
 		git config user.name "Travis-CI" && git config user.email "travis@travis-ci.org"; \
 		git commit -m $(COMMIT_MSG); \
 		git push --quiet origin $(GHPDIR) > /dev/null 2>&1;
+else
+	@# noop
+endif
 
 # Delete API docs
 clean-docs:
