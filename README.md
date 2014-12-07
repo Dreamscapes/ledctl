@@ -33,9 +33,9 @@ I am aware of Raspberry-Pi, Banana-Pi and BeagleBone having user-controllable LE
 
 ## Usage
 
-Here's a crash course. I suggest you read the API docs afterwards - it contains all the information you may need to work with this library.
+Here's a crash course. I suggest you read the [API docs][api-docs] afterwards - it contains all the information you may need to work with this library.
 
-A quick hint - all callbacks are optional. However, if there's a problem writing to the LED's sysfs filesystem the function will throw on you.
+A quick hint - **all callbacks are optional**. However, if there's a problem writing to the LED's sysfs filesystem the function will throw on you.
 
 **Great benefit** of this library is that you can simply chain calls to the LED however you wish and all the blinks will be queued and processed in the order you wanted - there's **no need to introduce a callback hell** just to blink out *SOS* in morse code.
 
@@ -61,17 +61,47 @@ led.blink(
 led.morse('sos') // Watch the awesomeness!
 ```
 
+### Chaining methods and blinks
+
+Methods are chainable. Also, my primary goal was to make an asynchronous implementation of LED control but without the usual callback hell associated with such implementation. As such, all the callbacks are optional (but they will throw on you if there's a problem, so be careful - better use a [domain](http://nodejs.org/api/domain.html) in critical production systems... Wait, what? A LED-controlling library in a production-critical system?)
+
+```js
+// Let's control the green led...
+var led = new LEDController('green')
+
+// Let's make it blink out SOS in morse code, then turn
+// it off for 5 seconds and then set its trigger to mmc0
+// (so it will blink on SD card activity)
+led
+  .morse('sos')
+  // Read: blink for zero percent of 5000 milliseconds
+  .blink({ for: 0, of: 5000 })
+  .trigger('mmc0')
+```
+
+Notice that the LED will process the events exactly in the order as you called the functions.
+
+### Emptying the blink queue
+
+Sometimes it might be necessary to cancel any scheduled blink events and put the LED into an idle state - to do that, simply call `.reset()`:
+
+```js
+led.morse('no one will see me :(').reset()
+```
+
+However, any callbacks associated with the cancelled blink events will be cancelled, too.
+
 ## Extending the API
 
-You may want to implement your own method that takes arbitrary input and generates (or not) photons via your LED! For example, you may want to take a Buffer and turn the LED on every time the bit changes... Or take a string and blink when there's a vowel... Or whatever - you can do it all!
+You may want to implement your own method that takes arbitrary input and generates (or not) photons via your LED! For example, you may want to take a Buffer and turn the LED on every time the bits change... Or take a string and blink when there's a vowel... Or whatever - you can do it all!
 
-It's rather simple - first, you need to write your **serialiser**. A serialiser takes two arguments - an input value (this is what should be converted to blink events - most likely some kind of string) and a callback function which you should call with an optional Error object (or null if no error) and an array of *Blink* events.
+It's rather simple - first, you need to write your **serialiser**. A serialiser takes one argument - an input value (this is what should be converted to blink events - most likely some kind of string) and returns an array of *Blink* objects. A *Blink* object describes how long a LED should be on and how long it should be off during a single event.
 
 I highly suggest that you take a look at how the morse code method is implemented in *serialisers/morse.js*.
 
 ## Documentation
 
-Documentation is available at http://dreamscapes.github.io/ledctl
+Documentation is available [here][api-docs].
 
 To generate documentation locally, run `make docs` from the repository's root.
 
@@ -86,3 +116,4 @@ This software is licensed under the **BSD-3-Clause License**. See the [LICENSE](
 [coveralls-badge]: https://img.shields.io/coveralls/Dreamscapes/ledctl.svg
 [coveralls-url]: https://coveralls.io/r/Dreamscapes/ledctl
 [make-badge]: https://img.shields.io/badge/built%20with-GNU%20Make-brightgreen.svg
+[api-docs]: http://dreamscapes.github.io/ledctl
