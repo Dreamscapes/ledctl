@@ -138,8 +138,8 @@
 <h2>Installation Instructions</h2><p>Install the module via npm: <code>npm install ledctl</code></p>
 <h2>Requirements</h2><p>Currently only Linux-based operating systems are known to be supported. PRs are always welcome if you discover more operating systems where LEDs are exposed via the filesystem (usually in <em>/sys/class/leds</em> but this can be overriden if the OS uses a different path).</p>
 <p>I am aware of Raspberry-Pi, Banana-Pi and BeagleBone having user-controllable LEDs, but I am quite sure there's many more.</p>
-<h2>Usage</h2><p>Here's a crash course. I suggest you read the API docs afterwards - it contains all the information you may need to work with this library.</p>
-<p>A quick hint - all callbacks are optional. However, if there's a problem writing to the LED's sysfs filesystem the function will throw on you.</p>
+<h2>Usage</h2><p>Here's a crash course. I suggest you read the <a href="http://dreamscapes.github.io/ledctl">API docs</a> afterwards - it contains all the information you may need to work with this library.</p>
+<p>A quick hint - <strong>all callbacks are optional</strong>. However, if there's a problem writing to the LED's sysfs filesystem the function will throw on you.</p>
 <p><strong>Great benefit</strong> of this library is that you can simply chain calls to the LED however you wish and all the blinks will be queued and processed in the order you wanted - there's <strong>no need to introduce a callback hell</strong> just to blink out <em>SOS</em> in morse code.</p>
 <pre class="prettyprint source lang-js"><code>var LEDController = require('ledctl')
 
@@ -159,10 +159,24 @@ led.blink(
 )
 
 // Holy grail
-led.morse('sos') // Watch the awesomeness!</code></pre><h2>Extending the API</h2><p>You may want to implement your own method that takes arbitrary input and generates (or not) photons via your LED! For example, you may want to take a Buffer and turn the LED on every time the bit changes... Or take a string and blink when there's a vowel... Or whatever - you can do it all!</p>
-<p>It's rather simple - first, you need to write your <strong>serialiser</strong>. A serialiser takes two arguments - an input value (this is what should be converted to blink events - most likely some kind of string) and a callback function which you should call with an optional Error object (or null if no error) and an array of <em>Blink</em> events.</p>
+led.morse('sos') // Watch the awesomeness!</code></pre><h3>Chaining methods and blinks</h3><p>Methods are chainable. Also, my primary goal was to make an asynchronous implementation of LED control but without the usual callback hell associated with such implementation. As such, all the callbacks are optional (but they will throw on you if there's a problem, so be careful - better use a <a href="http://nodejs.org/api/domain.html">domain</a> in critical production systems... Wait, what? A LED-controlling library in a production-critical system?)</p>
+<pre class="prettyprint source lang-js"><code>// Let's control the green led...
+var led = new LEDController('green')
+
+// Let's make it blink out SOS in morse code, then turn
+// it off for 5 seconds and then set its trigger to mmc0
+// (so it will blink on SD card activity)
+led
+  .morse('sos')
+  // Read: blink for zero percent of 5000 milliseconds
+  .blink({ for: 0, of: 5000 })
+  .trigger('mmc0')</code></pre><p>Notice that the LED will process the events exactly in the order as you called the functions.</p>
+<h3>Emptying the blink queue</h3><p>Sometimes it might be necessary to cancel any scheduled blink events and put the LED into an idle state - to do that, simply call <code>.reset()</code>:</p>
+<pre class="prettyprint source lang-js"><code>led.morse('no one will see me :(').reset()</code></pre><p>However, any callbacks associated with the cancelled blink events will be cancelled, too.</p>
+<h2>Extending the API</h2><p>You may want to implement your own method that takes arbitrary input and generates (or not) photons via your LED! For example, you may want to take a Buffer and turn the LED on every time the bits change... Or take a string and blink when there's a vowel... Or whatever - you can do it all!</p>
+<p>It's rather simple - first, you need to write your <strong>serialiser</strong>. A serialiser takes one argument - an input value (this is what should be converted to blink events - most likely some kind of string) and returns an array of <em>Blink</em> objects. A <em>Blink</em> object describes how long a LED should be on and how long it should be off during a single event.</p>
 <p>I highly suggest that you take a look at how the morse code method is implemented in <em>serialisers/morse.js</em>.</p>
-<h2>Documentation</h2><p>Documentation is available at http://dreamscapes.github.io/ledctl</p>
+<h2>Documentation</h2><p>Documentation is available <a href="http://dreamscapes.github.io/ledctl">here</a>.</p>
 <p>To generate documentation locally, run <code>make docs</code> from the repository's root.</p>
 <h2>License</h2><p>This software is licensed under the <strong>BSD-3-Clause License</strong>. See the <a href="LICENSE">LICENSE</a> file for more information.</p></article>
     </section>
@@ -175,7 +189,7 @@ led.morse('sos') // Watch the awesomeness!</code></pre><h2>Extending the API</h2
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha10</a> on Sun Dec 07 2014 02:17:02 GMT+0000 (UTC)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha11</a> on Sun Dec 07 2014 19:48:49 GMT+0000 (UTC)
         </footer>
     </div>
 </div>
