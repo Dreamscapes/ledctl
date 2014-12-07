@@ -11,6 +11,8 @@
 # Helper vars
 BIN = node_modules/.bin/
 NODE_V = $(shell node -v | cut -f1,2 -d".")
+# Command line args for Mocha test runner
+MOCHAFLAGS = --reporter spec --require should
 
 # Project-specific information
 GH_USER = Alaneor
@@ -30,12 +32,10 @@ GHPDIR = gh-pages
 # Travis cannot access our repo using just a username - a token is necessary to be exported into
 # GH_TOKEN env variable
 GH_USER := $(if ${GH_TOKEN},${GH_TOKEN},$(GH_USER))
-# This will usually not changes, but if someone forks our repo, this should make sure Travis will
+# This will usually not change, but if someone forks our repo, this should make sure Travis will
 # not try to update the source repo
 GH_REPO := $(if ${TRAVIS_REPO_SLUG},${TRAVIS_REPO_SLUG},$(GH_REPO))
 
-# Command line args for Mocha test runner
-MOCHAFLAGS = --reporter spec --require should
 
 # Default - Run it all! (except for coveralls - that should be run only from Travis)
 all: install lint test coverage docs
@@ -61,7 +61,7 @@ coverage:
 # Submit coverage results to Coveralls (works from Travis; from localhost, additional setup is
 # necessary
 coveralls: coverage
-	@cat $(COVDIR)/lcov.info | $(BIN)coveralls
+	@$(BIN)coveralls < $(COVDIR)/lcov.info
 
 # Generate API documentation
 docs:
@@ -69,8 +69,10 @@ docs:
 
 # Update gh-pages branch with new docs
 gh-pages: clean-gh-pages docs
-ifeq ($(NODE_V), $(GH_NODE))  # Only deploy to gh-pages when node version meets requirements
-	@# The commit message when updating gh-pages
+ifneq ($(NODE_V), $(GH_NODE))  # Only deploy to gh-pages when node version meets requirements
+	@echo "Publishing Github Pages is restricted to Node.js $(GH_NODE)"
+	@exit 1
+else
 	$(eval COMMIT_MSG := $(if ${TRAVIS},\
 		"Updated gh-pages from Travis build ${TRAVIS_JOB_NUMBER}",\
 		"Updated gh-pages manually"))
@@ -84,8 +86,6 @@ ifeq ($(NODE_V), $(GH_NODE))  # Only deploy to gh-pages when node version meets 
 		git config user.name "Travis-CI" && git config user.email "travis@travis-ci.org"; \
 		git commit -m $(COMMIT_MSG); \
 		git push --quiet origin $(GHPDIR) > /dev/null 2>&1;
-else
-	@# noop
 endif
 
 # Delete API docs
