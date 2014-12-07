@@ -19,7 +19,7 @@ MOCHAFLAGS = --reporter spec --require should
 
 # Project-specific information
 GH_USER = Alaneor
-GH_REPO = dreamscapes/ledctl
+GH_REPO = $(shell git remote -v | grep origin | grep fetch | cut -d":" -f2 | cut -d"." -f1)
 
 # Project-specific paths
 LIBDIR = lib
