@@ -10,15 +10,16 @@
 
 # Helper vars
 BIN = node_modules/.bin/
+# Current Node.js version (in the form v{MAJOR}.{MINOR}, i.e. v0.10)
 NODE_V = $(shell node -v | cut -f1,2 -d".")
+# If there is any target that mutates some remote data, check if it runs on this version of Node
+NODE_T = v0.10
 # Command line args for Mocha test runner
 MOCHAFLAGS = --reporter spec --require should
 
 # Project-specific information
 GH_USER = Alaneor
 GH_REPO = dreamscapes/ledctl
-# Only deploy to gh-pages from node 0.10
-GH_NODE = v0.10
 
 # Project-specific paths
 LIBDIR = lib
@@ -60,7 +61,7 @@ coverage:
 
 # Submit coverage results to Coveralls (works from Travis; from localhost, additional setup is
 # necessary
-coveralls: coverage
+coveralls: restrict-node-v coverage
 	@$(BIN)coveralls < $(COVDIR)/lcov.info
 
 # Generate API documentation
@@ -68,11 +69,7 @@ docs:
 	@$(BIN)jsdoc --destination $(DOCDIR) -c .jsdoc.json
 
 # Update gh-pages branch with new docs
-gh-pages: clean-gh-pages docs
-ifneq ($(NODE_V), $(GH_NODE))  # Only deploy to gh-pages when node version meets requirements
-	@echo "Publishing Github Pages is restricted to Node.js $(GH_NODE)"
-	@exit 1
-else
+gh-pages: restrict-node-v clean-gh-pages docs
 	$(eval COMMIT_MSG := $(if ${TRAVIS},\
 		"Updated gh-pages from Travis build ${TRAVIS_JOB_NUMBER}",\
 		"Updated gh-pages manually"))
@@ -86,6 +83,15 @@ else
 		git config user.name "Travis-CI" && git config user.email "travis@travis-ci.org"; \
 		git commit -m $(COMMIT_MSG); \
 		git push --quiet origin $(GHPDIR) > /dev/null 2>&1;
+
+# Intermediate target to ensure that a task will only run on a specific Node.js version
+# NODE_V -> Current Node.js version
+# NODE_T -> Target Node.js version
+restrict-node-v:
+ifneq ($(NODE_V), $(NODE_T))
+	@echo "This task modifies remote resources and requires specific version of Node.js runtime."
+	@echo "Node.js version required: $(NODE_T), got $(NODE_V) - bail out"
+	@exit 1
 endif
 
 # Delete API docs
