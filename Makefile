@@ -24,9 +24,6 @@ TSTDIR = test
 DOCDIR = docs
 COVDIR = coverage
 GHPDIR = gh-pages
-# Jsdoc configuration
-TPLDIR = jsdoc-template
-TPLGIT = https://github.com/davidshimjs/jaguarjs-jsdoc.git
 
 # Set/override some variables for Travis
 
@@ -67,12 +64,8 @@ coveralls: coverage
 	@cat $(COVDIR)/lcov.info | $(BIN)coveralls
 
 # Generate API documentation
-docs: jsdoc-template
-	@$(BIN)jsdoc -r $(LIBDIR) README.md --destination $(DOCDIR) -t $(TPLDIR) -c .jsdoc.json
-
-# Download the jsdoc template
-jsdoc-template:
-	@git clone --depth 1 $(TPLGIT) $(TPLDIR)
+docs:
+	@$(BIN)jsdoc --destination $(DOCDIR) -c .jsdoc.json
 
 # Update gh-pages branch with new docs
 gh-pages: clean-gh-pages docs
@@ -107,10 +100,6 @@ clean-coverage:
 clean-gh-pages:
 	@rm -rf $(GHPDIR)
 
-# Delete jsdoc template dir
-clean-jsdoc-template:
-	@rm -rf $(TPLDIR)
-
 # Delete all generated files
 clean: clean-docs clean-coverage clean-gh-pages
 
@@ -123,5 +112,4 @@ clean: clean-docs clean-coverage clean-gh-pages
 	clean-docs \
 	clean-coverage \
 	clean-gh-pages \
-	clean-jsdoc-template \
 	clean

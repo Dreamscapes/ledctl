@@ -1,4 +1,14 @@
 {
+  "source": {
+    "include": [
+      "./lib/",
+      "./README.md"
+    ]
+  },
+  "opts": {
+    "template": "node_modules/jaguarjs-jsdoc",
+    "recurse": true
+  },
   "plugins": ["plugins/markdown"],
   "templates": {
     "cleverLinks": true,
@@ -12,6 +22,7 @@
   },
   "markdown": {
     "parser": "gfm",
-    "hardwrap": true
+    "githubRepoName": "ledctl",
+    "githubRepoOwner": "Dreamscapes"
   }
 }
