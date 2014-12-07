@@ -73,14 +73,16 @@ gh-pages: restrict-node-v clean-gh-pages docs
 	$(eval COMMIT_MSG := $(if ${TRAVIS},\
 		"Updated gh-pages from Travis build ${TRAVIS_JOB_NUMBER}",\
 		"Updated gh-pages manually"))
-
-	@git clone --branch=$(GHPDIR) \
+ifeq (${TRAVIS}, true)
+	git config --global user.name "Travis-CI"
+	git config --global user.email "travis@travis-ci.org"
+endif
+	@git clone --branch=gh-pages \
 			https://$(GH_USER)@github.com/$(GH_REPO).git $(GHPDIR) > /dev/null 2>&1; \
 		cd $(GHPDIR); \
 		rm -rf *; \
 		cp -Rf ../$(DOCDIR)/* .; \
 		git add -A; \
-		git config user.name "Travis-CI" && git config user.email "travis@travis-ci.org"; \
 		git commit -m $(COMMIT_MSG); \
 		git push --quiet origin $(GHPDIR) > /dev/null 2>&1;
 
