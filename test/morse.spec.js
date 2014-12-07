@@ -16,52 +16,39 @@
 'use strict';
 
 var morse = require('../lib/serialisers/morse')
-  , should = require('should')
+  , blinks
 
 
 describe('Morse code serialiser', function () {
 
-  it('should produce series of Blink objects', function (done) {
-    morse('a', function (err, blinks) {
-      should(err).equal(null)
-      blinks.length.should.equal(2)
+  it('should produce series of Blink objects', function () {
+    blinks = morse('a')
+    blinks.length.should.equal(2)
 
-      // First Blink
-      blinks[0].for.should.equal(50)
-      // Second Blink
-      blinks[1].for.should.equal(75)
-      blinks[1].of.should.equal(2000)
-
-      done()
-    })
+    // First Blink
+    blinks[0].for.should.equal(50)
+    // Second Blink
+    blinks[1].for.should.equal(75)
+    blinks[1].of.should.equal(2000)
   })
 
-  it('should insert letter break between two letter codes', function (done) {
-    morse('ab', function (err, blinks) {
-      // 0 -> ., 1 -> _, 2 -> expected letter break
-      blinks[2].for.should.equal(0)
-      blinks[2].of.should.equal(500)
-
-      done()
-    })
+  it('should insert letter break between two letter codes', function () {
+    blinks = morse('ab')
+    // 0 -> ., 1 -> _, 2 -> expected letter break
+    blinks[2].for.should.equal(0)
+    blinks[2].of.should.equal(500)
   })
 
-  it('should not put letter break at the end of sequence', function (done) {
-    morse('ab c', function (err, blinks) {
-      blinks.length.should.equal(12)    // ._l_...w_._.; l -> letter break, w -> word break
-      blinks[blinks.length - 1].for.should.not.equal(0)
-
-      done()
-    })
+  it('should not put letter break at the end of sequence', function () {
+    blinks = morse('ab c')
+    blinks.length.should.equal(12)    // ._l_...w_._.; l -> letter break, w -> word break
+    blinks[blinks.length - 1].for.should.not.equal(0)
   })
 
-  it('should insert word break on space', function (done) {
-    morse('a b', function (err, blinks) {
-      // 0 -> ., 1 -> _, 2 -> expected word break (a space)
-      blinks[2].for.should.equal(0)
-      blinks[2].of.should.equal(3500)
-
-      done()
-    })
+  it('should insert word break on space', function () {
+    blinks = morse('a b')
+    // 0 -> ., 1 -> _, 2 -> expected word break (a space)
+    blinks[2].for.should.equal(0)
+    blinks[2].of.should.equal(3500)
   })
 })

@@ -294,10 +294,10 @@ describe('LEDController', function () {
       ledGreen.dummymethod('test')
     })
 
-    it('should pass all errors returned from handlers to the method callback', function (done) {
-      LEDController.register('dummymethod', function (input, next) {
+    it('should pass all errors thrown from handlers to the method callback', function (done) {
+      LEDController.register('dummymethod', function () {
         // Imagine an error in my custom serialiser happened...
-        return next(new Error('test'))
+        throw new Error('test')
       })
 
       ledGreen.dummymethod('input', function (err) {
@@ -308,9 +308,9 @@ describe('LEDController', function () {
     })
 
     it('should call the callback only once, even if more blinks are in queue', function (done) {
-      LEDController.register('dummymethod', function (input, next) {
+      LEDController.register('dummymethod', function () {
         // Just two superfast blink events...
-        return next(null, [{ rate: 10000 }, { rate: 10000 }])
+        return [{ rate: 10000 }, { rate: 10000 }]
       })
 
       // Mocha will surely complain about calling done multiple times
