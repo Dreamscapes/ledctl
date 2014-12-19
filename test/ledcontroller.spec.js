@@ -410,4 +410,12 @@ describe('LEDController', function () {
 
     // TODO
   })
+
+
+  describe('.toString()', function () {
+
+    it('should return proper object class name', function () {
+      ledGreen.toString().should.equal('[object LEDController]')
+    })
+  })
 })
