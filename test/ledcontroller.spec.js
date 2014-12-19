@@ -251,13 +251,13 @@ describe('LEDController', function () {
     it('should throw on handlers not being functions', function () {
       (function () {
         LEDController.register('dummymethod', 'ladida')
-      }).should.throw();    // Semicolon necessary... wow
+      }).should.throw()
 
-      (function () {
+      ;(function () {
         LEDController.register('dummymethod', 42)
-      }).should.throw();
+      }).should.throw()
 
-      (function () {
+      ;(function () {
         LEDController.register('dummymethod', undefined)
       }).should.throw()
     })
@@ -276,9 +276,9 @@ describe('LEDController', function () {
       // This should pass - registering it for the first time...
       (function () {
         LEDController.register('dummymethod', function () {})
-      }).should.not.throw();
+      }).should.not.throw()
       // And here it should throw
-      (function () {
+      ;(function () {
         LEDController.register('dummymethod', function () {})
       }).should.throw()
     })
