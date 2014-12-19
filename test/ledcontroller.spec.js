@@ -418,4 +418,13 @@ describe('LEDController', function () {
       ledGreen.toString().should.equal('[object LEDController]')
     })
   })
+
+
+  describe('.valueOf()', function () {
+
+    it('should return the LED\'s current brightness', function () {
+
+      ledGreen.valueOf().should.equal(ledGreen.brightness.cur)
+    })
+  })
 })
