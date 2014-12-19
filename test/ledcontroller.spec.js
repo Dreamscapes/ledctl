@@ -406,6 +406,51 @@ describe('LEDController', function () {
   })
 
 
+  describe('.setBrightness()', function () {
+
+    beforeEach(restoreBrightness)
+    after(restoreBrightness)
+
+
+    it('should write to /brightness the desired brightness', function (done) {
+      ledGreen.setBrightness(100, function () {
+        // We don't have to look at fs because we have a test that verifies this property being
+        // realtime :)
+        ledGreen.brightness.cur.should.equal(100)
+        done()
+      })
+    })
+
+    it('should work with string-like integers', function (done) {
+      ledGreen.setBrightness('100', function () {
+
+        ledGreen.brightness.cur.should.equal(100)
+        done()
+      })
+    })
+
+    it('should prevent negative brightness and set it to 0', function (done) {
+      ledGreen.setBrightness(-10, function () {
+
+        ledGreen.brightness.cur.should.equal(0)
+        done()
+      })
+    })
+
+    it('should prevent brightness higher than maximum supported', function (done) {
+      ledGreen.setBrightness(1000, function () {
+
+        ledGreen.brightness.cur.should.equal(ledGreen.brightness.max)
+        done()
+      })
+    })
+
+    it('should return this', function (done) {
+      ledGreen.setBrightness(100, done).should.be.exactly(ledGreen)
+    })
+  })
+
+
   describe('.blink()', function () {
 
     // TODO
