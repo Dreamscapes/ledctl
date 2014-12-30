@@ -4,6 +4,7 @@ language: node_js
 node_js:
 - '0.11'
 - '0.10'
+- '0.8'
 after_success:
 - make coveralls
 - '[[ -n "$TRAVIS_TAG" ]] && make gh-pages'
@@ -20,6 +21,7 @@ deploy:
 matrix:
   allow_failures:
   - node_js: '0.11'
+  - node_js: '0.8'
 env:
   global:
     secure: medK5FkcYvntB64osQZP3orfU5SvcY7cxxF1DeFO1B23MeB2Vjs9wCWHm0UuyF536tQgOB4uhmrN1HIXt0fNEPElu2lGiQxrTW7yxxLQaeuaA+nLR1rBpRPn9UNeMbfqtwbyzRhfTCHPPptdy78Qz2QUTSQIZeIgaii/V85jV/A=
