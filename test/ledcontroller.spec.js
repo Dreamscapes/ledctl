@@ -307,6 +307,17 @@ describe('LEDController', function () {
       })
     })
 
+    it('should throw if handler throws and no callback has been provided', function () {
+      LEDController.register('dummymethod', function () {
+        // Imagine an error in my custom serialiser happened...
+        throw new Error('test')
+      })
+
+      ;(function () {
+        ledGreen.dummymethod('input')
+      }).should.throw('test')
+    })
+
     it('should call the callback only once, even if more blinks are in queue', function (done) {
       LEDController.register('dummymethod', function () {
         // Just two superfast blink events...
