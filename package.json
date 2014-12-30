@@ -1,7 +1,7 @@
 {
   "name": "ledctl",
   "description": "Control your LEDs from JavaScript or using terminal",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "homepage": "https://github.com/Dreamscapes/ledctl",
   "author": {
     "name": "Robert Rossmann",
