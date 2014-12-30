@@ -43,9 +43,9 @@
             
             <span class="subtitle">Members</span>
             
-                <li data-name="LEDController.RATE"><a href="LEDController.html#RATE">RATE</a></li>
+                <li data-name="LEDController.RATE"><a href="LEDController.html#.RATE">RATE</a></li>
             
-                <li data-name="LEDController.ROOT"><a href="LEDController.html#ROOT">ROOT</a></li>
+                <li data-name="LEDController.ROOT"><a href="LEDController.html#.ROOT">ROOT</a></li>
             
                 <li data-name="LEDController#brightness"><a href="LEDController.html#brightness">brightness</a></li>
             
@@ -60,18 +60,18 @@
             
             <span class="subtitle">Typedefs</span>
             
-                <li data-name="LEDController.Blink"><a href="LEDController.html#Blink">Blink</a></li>
+                <li data-name="LEDController.Blink"><a href="LEDController.html#.Blink">Blink</a></li>
             
-                <li data-name="LEDController.Parser"><a href="LEDController.html#Parser">Parser</a></li>
+                <li data-name="LEDController.Parser"><a href="LEDController.html#.Parser">Parser</a></li>
             
             </ul>
             <ul class="methods itemMembers">
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="LEDController.discover"><a href="LEDController.html#discover">discover</a></li>
+                <li data-name="LEDController.discover"><a href="LEDController.html#.discover">discover</a></li>
             
-                <li data-name="LEDController.register"><a href="LEDController.html#register">register</a></li>
+                <li data-name="LEDController.register"><a href="LEDController.html#.register">register</a></li>
             
                 <li data-name="LEDController#blink"><a href="LEDController.html#blink">blink</a></li>
             
@@ -79,11 +79,17 @@
             
                 <li data-name="LEDController#reset"><a href="LEDController.html#reset">reset</a></li>
             
+                <li data-name="LEDController#setBrightness"><a href="LEDController.html#setBrightness">setBrightness</a></li>
+            
+                <li data-name="LEDController#toString"><a href="LEDController.html#toString">toString</a></li>
+            
                 <li data-name="LEDController#trigger"><a href="LEDController.html#trigger">trigger</a></li>
             
                 <li data-name="LEDController#turnOff"><a href="LEDController.html#turnOff">turnOff</a></li>
             
                 <li data-name="LEDController#turnOn"><a href="LEDController.html#turnOn">turnOn</a></li>
+            
+                <li data-name="LEDController#valueOf"><a href="LEDController.html#valueOf">valueOf</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -94,7 +100,7 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="X_home_travis_build_Dreamscapes_ledctl_lib_ledcontroller.js.html">Source: /home/travis/build/Dreamscapes/ledctl/lib/ledcontroller.js</h1>
+        <h1 class="page-title" data-filename="-_home_travis_build_Dreamscapes_ledctl_lib_ledcontroller.js.html">Source: /home/travis/build/Dreamscapes/ledctl/lib/ledcontroller.js</h1>
         
 
 
@@ -141,10 +147,6 @@ module.exports = LEDController
  */
 function LEDController (identifier) {
 
-  // DISCLAIMER: This is probably the longest constructor I have ever written. Not that I have
-  // written many constructors... I will consider splitting this into individual functions, just for
-  // the fun of it. Someday, maybe.
-
   var availableLEDs = LEDController.discover()
   // If no identifier specified but there is only a single LED available, control that one
   if (! identifier &amp;&amp; availableLEDs.length === 1) identifier = availableLEDs[0]
@@ -162,8 +164,34 @@ function LEDController (identifier) {
   // Required (and required-to-be-valid) argument
   // Also takes care of identifier being undefined
   if (! _(availableLEDs).contains(identifier)) {
-    throw new Error(fmt('No such LED: %s in %s', identifier, LEDController.ROOT))
+    throw new Error(fmt('No such LED: \'%s\' in %s', identifier, LEDController.ROOT))
   }
+
+  // brightness information (will be attached to `this`)
+  brightness =
+  { min: 0
+  , max: parseInt(contentOf(location, 'max_brightness'))
+  }
+  // brightness.cur
+  Object.defineProperty(brightness, 'cur',
+  { enumerable: true
+  , get: function getBrightness () {
+      return parseInt(contentOf(that.location, 'brightness'))
+    }
+  })
+
+  // triggers information (will be attached to `this`)
+  triggers =
+  { all: getTriggerData(location).all
+  }
+  // triggers.cur
+  Object.defineProperty(triggers, 'cur',
+  { enumerable: true
+  , get: function getTrigger () {
+      return getTriggerData(that.location).cur
+    }
+  })
+
 
   /**
    * @summary   The LED's ID, as given to the constructor.
@@ -183,19 +211,6 @@ function LEDController (identifier) {
    */
   define('location', { enumerable: true, value: location })
 
-  // brightness information (will be attached to `this`)
-  brightness =
-  { min: 0
-  , max: parseInt(contentOf(this.location, 'max_brightness'))
-  }
-  // brightness.cur
-  Object.defineProperty(brightness, 'cur',
-  { enumerable: true
-  , get: function getBrightness () {
-      return parseInt(contentOf(that.location, 'brightness'))
-    }
-  })
-
   /**
    * @summary   The LED's brightness information
    *
@@ -206,18 +221,6 @@ function LEDController (identifier) {
    * @property  {integer}   cur         Current brightness level (sync getter)
    */
   define('brightness', { enumerable: true, value: Object.freeze(brightness) })
-
-  // triggers information (will be attached to `this`)
-  triggers =
-  { all: getTriggerData(this.location).all
-  }
-  // triggers.cur
-  Object.defineProperty(triggers, 'cur',
-  { enumerable: true
-  , get: function getTrigger () {
-      return getTriggerData(that.location).cur
-    }
-  })
 
   /**
    * @summary   The LED's supported triggers and currently enabled trigger
@@ -343,7 +346,7 @@ LEDController.register = function register (parser, handler) {
 
   // Make sure this function is not already on the prototype
   if (LEDController.prototype[parser]) {
-    throw new Error(fmt('Function: %s already defined on prototype', parser))
+    throw new Error(fmt('Property/function: \'%s\' already defined on prototype', parser))
   }
 
   LEDController.prototype[parser] = function customParser (input, done) {
@@ -351,6 +354,7 @@ LEDController.register = function register (parser, handler) {
     var that = this   // scope
       , emptyCallback = normaliseCallback()   // This will be fun!
       , data
+    done = normaliseCallback(done)
 
     try {
       // Summon the handler to do the master's bidding
@@ -360,7 +364,6 @@ LEDController.register = function register (parser, handler) {
     }
 
     // Normalise
-    done = normaliseCallback(done)
     data = data instanceof Array ? data : [data]
 
     // Push the data to the blinker queue
@@ -407,6 +410,26 @@ LEDController.prototype.trigger = function trigger (value, done) {
 }
 
 /**
+ * @summary   Set the LED's brightness to desired value
+ *
+ * @desc      The integer value must be from the supported range (min &lt;= value &lt;= max).
+ *
+ * @param     {Number}      value     The new brightness to be set
+ * @param     {Function}    done      Optional callback (if omitted, it will throw on error)
+ * @return    {this}
+ */
+LEDController.prototype.setBrightness = function setBrightness (value, done) {
+
+  // Normalise value - ensure value is an integer and within acceptable range
+  value = parseInt(value)
+  value = value &lt;= this.brightness.min ? this.brightness.min : Math.min(value, this.brightness.max)
+
+  this.writer.push({ to: 'brightness', data: value }, done)
+
+  return this
+}
+
+/**
  * Conjure photons (Turn the LED on)
  *
  * @param     {Function}    done      Optional callback (if omitted, it will throw on error)
@@ -414,7 +437,7 @@ LEDController.prototype.trigger = function trigger (value, done) {
  */
 LEDController.prototype.turnOn = function turnOn (done) {
 
-  this.writer.push({ to: 'brightness', data: this.brightness.max }, done)
+  this.setBrightness(this.brightness.max, done)
 
   return this
 }
@@ -427,7 +450,7 @@ LEDController.prototype.turnOn = function turnOn (done) {
  */
 LEDController.prototype.turnOff = function turnOff (done) {
 
-  this.writer.push({ to: 'brightness', data: this.brightness.min }, done)
+  this.setBrightness(this.brightness.min, done)
 
   return this
 }
@@ -469,6 +492,32 @@ LEDController.prototype.reset = function reset (done) {
   this.turnOff(done)
 
   return this
+}
+
+/**
+ * @summary   Override default .toString() function to return proper class name
+ *
+ * @return    {String}      If not called from a subclass, returns [object LEDController]
+ */
+LEDController.prototype.toString = function toString () {
+
+  return fmt('[object %s]', this.constructor.name)
+}
+
+/**
+ * @summary   Override dedault .valueOf() to return current brightness
+ *
+ * @desc      This implementation is currently experimental and feedback on its usability is very
+ *            welcome. It does, however, kind of make sense - a "value" of a LED could only be
+ *            represented by either its colour or brightness (or a combination thereof). And colour
+ *            we do not support.
+ *            **Note: this function blocks the proces while reading current brightness.**
+ *
+ * @return    {Number}      LED's current brigthness
+ */
+LEDController.prototype.valueOf = function valueOf () {
+
+  return this.brightness.cur
 }
 
 
@@ -579,30 +628,39 @@ function blinkWorker (opts, done) {
     , timeOn = of / 100 * coef
     , timeOff = of - timeOn
 
+  function nextStep (next, time) {
 
-  // Special case - timeOn === 0
-  if (timeOn === 0) {
-    // Do not even turn the led on
-    return setTimeout(done, timeOff)
+    return function nextStepHandler (err) {
+
+      if (err) {
+        return next(err)
+      }
+
+      setTimeout(next, time)
+    }
   }
 
-  // Turn the LED on
-  this.turnOn(function (err) {
+  async.series(
+    // Turn the LED on for timeOn miliseconds
+    { on: function blinkOn (next) {
 
-    if (err) {
-      return done(err)    // The story ends here
+        // Special case: timeOn === 0
+        if (timeOn === 0) {
+          // Do not even turn the led on
+          return next()
+        }
+
+        that.turnOn(nextStep(next, timeOn))
+      }
+
+    // Turn the LED off for timeOff miliseconds
+    , off: function blinkOff (next) {
+
+        that.turnOff(nextStep(next, timeOff))
+      }
     }
-
-    setTimeout(function () {
-      // This timeout keeps the LED on
-      that.turnOff(function () {
-        setTimeout(function () {
-          // This timeout keeps the LED off for the remaining duration of the sequence
-          done()
-        }, timeOff)
-      })
-    }, timeOn)
-  })
+  , done
+  )
 }
 
 /**
@@ -631,7 +689,7 @@ function writeWorker (opts, done) {
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha11</a> on Sun Dec 07 2014 19:48:49 GMT+0000 (UTC)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha13</a> on Tue Dec 30 2014 18:13:43 GMT+0000 (UTC)
         </footer>
     </div>
 </div>
