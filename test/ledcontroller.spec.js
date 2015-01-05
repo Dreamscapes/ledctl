@@ -63,7 +63,6 @@ describe('LEDController', function () {
     ledRed = new LEDController('red:led1')
   })
 
-
   it('should throw when no identifier given', function () {
     (function () {
       led = new LEDController()
@@ -121,7 +120,6 @@ describe('LEDController', function () {
     beforeEach(restoreBrightness)
     after(restoreBrightness)
 
-
     it('should have property min and equal 0', function () {
 
       ledGreen.brightness.min
@@ -176,7 +174,6 @@ describe('LEDController', function () {
 
     afterEach(restoreTriggers)
     after(restoreTriggers)
-
 
     it('should have property all and equal to /trigger', function () {
       ledGreen.triggers.all.should.containDeep(knownTriggers)
@@ -240,7 +237,6 @@ describe('LEDController', function () {
       // Cleanup
       delete LEDController.prototype.dummymethod
     })
-
 
     it('should accept functions as handlers', function () {
       (function () {
@@ -422,7 +418,6 @@ describe('LEDController', function () {
     beforeEach(restoreBrightness)
     after(restoreBrightness)
 
-
     it('should write to /brightness the desired brightness', function (done) {
       ledGreen.setBrightness(100, function () {
         // We don't have to look at fs because we have a test that verifies this property being
@@ -477,7 +472,6 @@ describe('LEDController', function () {
   })
 
 
-
   describe('.blink()', function () {
 
     // TODO
@@ -495,7 +489,6 @@ describe('LEDController', function () {
   describe('.valueOf()', function () {
 
     it('should return the LED\'s current brightness', function () {
-
       ledGreen.valueOf().should.equal(ledGreen.brightness.cur)
     })
   })
