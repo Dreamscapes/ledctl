@@ -83,13 +83,13 @@ Notice that the LED will process the events exactly in the order as you called t
 
 ### Emptying the blink queue
 
-Sometimes it might be necessary to cancel any scheduled blink events and put the LED into an idle state - to do that, simply call `.reset()`:
+Sometimes it might be necessary to cancel any scheduled blink events and put the LED into an idle (off) state - to do that, simply call `.reset()`:
 
 ```js
 led.morse('no one will see me :(').reset()
 ```
 
-However, any callbacks associated with the cancelled blink events will be cancelled, too.
+However, any callbacks associated with the cancelled blink events will be cancelled, too. Any blink events that you schedule afterwards will be processed as usual.
 
 ## Extending the API
 
