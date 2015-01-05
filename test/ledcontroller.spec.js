@@ -462,6 +462,22 @@ describe('LEDController', function () {
   })
 
 
+  describe('.reset()', function () {
+
+    it('should cancel all queued events and their associated callbacks', function (done) {
+      ledGreen.turnOn(function () {
+        done(new Error('Expected .turnOn() to be cancelled, but its callback was called'))
+      })
+      .reset(done)
+    })
+
+    it('should return this', function () {
+      ledGreen.reset().should.be.exactly(ledGreen)
+    })
+  })
+
+
+
   describe('.blink()', function () {
 
     // TODO
