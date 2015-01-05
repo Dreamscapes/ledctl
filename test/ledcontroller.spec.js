@@ -470,6 +470,16 @@ describe('LEDController', function () {
       .reset(done)
     })
 
+    it('should turn the LED off', function (done) {
+      ledGreen.turnOn(function () {
+        ledGreen.reset(function () {
+          ledGreen.brightness.cur.should.equal(0)
+
+          done()
+        })
+      })
+    })
+
     it('should return this', function () {
       ledGreen.reset().should.be.exactly(ledGreen)
     })
