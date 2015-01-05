@@ -459,6 +459,10 @@ describe('LEDController', function () {
 
   describe('.reset()', function () {
 
+    // Because the mocked file contains newline and we do not care about such things in actual
+    // implementation
+    after(restoreBrightness)
+
     it('should cancel all queued events and their associated callbacks', function (done) {
       ledGreen.turnOn(function () {
         done(new Error('Expected .turnOn() to be cancelled, but its callback was called'))
