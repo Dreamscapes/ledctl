@@ -6,6 +6,7 @@
   "latedef": "nofunc",
   "laxcomma": true,
   "maxlen": 100,
+  "mocha": true,
   "newcap": true,
   "node": true,
   "nonbsp": true,
@@ -13,21 +14,5 @@
   "quotmark": "single",
   "strict": true,
   "undef": true,
-  "unused": true,
-  "globals": {
-    "after": false,
-    "afterEach": false,
-    "assert": false,
-    "before": false,
-    "beforeEach": false,
-    "describe": false,
-    "it": false,
-    "setup": false,
-    "should": true,
-    "suite": false,
-    "teardown": false,
-    "test": false,
-    "xdescribe": false,
-    "xit": false
-  }
+  "unused": true
 }
