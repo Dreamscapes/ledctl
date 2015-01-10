@@ -13,7 +13,7 @@
 // Make jshint play nicely with should.js
 /* jshint expr: true */
 
-'use strict';
+'use strict'
 
 var fs = require('fs')
   , path = require('path')

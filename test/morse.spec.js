@@ -13,7 +13,7 @@
 // Make jshint play nicely with should.js
 /* jshint expr: true */
 
-'use strict';
+'use strict'
 
 var morse = require('../lib/serialisers/morse')
   , blinks
