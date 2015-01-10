@@ -10,4 +10,6 @@
  * @license    http://choosealicense.com/licenses/BSD-3-Clause  BSD-3-Clause License
  */
 
+'use strict'
+
 module.exports = require('./lib/ledcontroller')
