@@ -480,8 +480,8 @@ describe('LEDController', function () {
       })
     })
 
-    it('should return this', function () {
-      ledGreen.reset().should.be.exactly(ledGreen)
+    it('should return this', function (done) {
+      ledGreen.reset(done).should.be.exactly(ledGreen)
     })
   })
 
