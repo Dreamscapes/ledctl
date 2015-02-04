@@ -6,7 +6,6 @@
     ]
   },
   "opts": {
-    "template": "node_modules/jaguarjs-jsdoc",
     "recurse": true
   },
   "plugins": ["plugins/markdown"],
