@@ -10,10 +10,10 @@
 
 # Helper vars
 BIN = node_modules/.bin/
-# Current Node.js version (in the form v{MAJOR}.{MINOR}, i.e. v0.10)
+# Current Node.js version (in the form v{MAJOR}.{MINOR}, i.e. v0.12)
 NODE_V = $(shell node -v | cut -f1,2 -d".")
 # If there is any target that mutates some remote data, check if it runs on this version of Node
-NODE_T = v0.10
+NODE_T = v0.12
 # Command line args for Mocha test runner
 MOCHAFLAGS = --reporter spec --require should
 
