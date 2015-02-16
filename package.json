@@ -20,7 +20,7 @@
     "jshint-stylish": "^1.0.0",
     "mocha": "^2.0.1",
     "mocha-lcov-reporter": "^0.0.1",
-    "should": "^4"
+    "should": "^5"
   },
   "engines": {
     "node": ">= 0.10.0"
