@@ -63,7 +63,7 @@ describe('LEDController', function () {
     ledRed = new LEDController('red:led1')
   })
 
-  it('should throw when no identifier given', function () {
+  it('should throw when more LEDs are available and no identifier given', function () {
     (function () {
       led = new LEDController()
     }).should.throw()
