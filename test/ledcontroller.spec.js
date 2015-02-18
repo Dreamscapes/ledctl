@@ -84,12 +84,11 @@ describe('LEDController', function () {
 
     try {
       led = new LEDController()
-    } catch (e) {
+    } finally {
+      // This try/finally block is here just to make sure we get a chance to restore the function
       LEDController.discover = discoverFunc
-      throw e
     }
 
-    LEDController.discover = discoverFunc
     led.id.should.equal('green:led0')
   })
 
