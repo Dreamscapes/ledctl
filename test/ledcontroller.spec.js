@@ -283,7 +283,7 @@ describe('LEDController', function () {
       var handler = function (input) {
         input.should.equal('test')
 
-        process.nextTick(done)
+        setImmediate(done)
       }
 
       LEDController.register('dummymethod', handler)
