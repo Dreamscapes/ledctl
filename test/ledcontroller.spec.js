@@ -290,6 +290,9 @@ describe('LEDController', function () {
     })
 
     it('should pass all errors thrown from handlers to the method callback', function (done) {
+      // Simple asynchrony test - see assertion below
+      var ticked = false
+
       LEDController.register('dummymethod', function () {
         // Imagine an error in my custom serialiser happened...
         throw new Error('test')
@@ -297,9 +300,11 @@ describe('LEDController', function () {
 
       ledGreen.dummymethod('input', function (err) {
         err.message.should.equal('test')
-
+        ticked.should.equal(true, 'In callbacks, handler errors should be delivered in next tick')
         done()
       })
+
+      ticked = true
     })
 
     it('should throw if handler throws and no callback has been provided', function () {
