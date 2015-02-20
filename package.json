@@ -1,7 +1,7 @@
 {
   "name": "ledctl",
   "description": "Control your LEDs from JavaScript or using terminal",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": {
     "name": "Robert Rossmann",
     "email": "rr.rossmann@me.com"
