@@ -1,107 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Index</title>
-    
-    
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
-    <script src="scripts/jquery.min.js"></script>
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/jaguar.css">
-    
-    
-    <script>
-    var config = {"monospaceLinks":true,"cleverLinks":true,"default":{"outputSourceFiles":true},"applicationName":"Dreamscapes\\Ledctl","googleAnalytics":"","linenums":true};
-    </script>
-    
-
-    
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
 </head>
-<body>
-<div id="wrap" class="clearfix">
-    
-<div class="navigation">
-    <h3 class="applicationName"><a href="index.html">Dreamscapes\Ledctl</a></h3>
 
-    <div class="search">
-        <input id="search" type="text" class="form-control input-sm" placeholder="Search Documentations">
-    </div>
-    <ul class="list">
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
     
-        <li class="item" data-name="LEDController">
-            <span class="title">
-                <a href="LEDController.html">LEDController</a>
-                
-            </span>
-            <ul class="members itemMembers">
-            
-            <span class="subtitle">Members</span>
-            
-                <li data-name="LEDController.RATE"><a href="LEDController.html#.RATE">RATE</a></li>
-            
-                <li data-name="LEDController.ROOT"><a href="LEDController.html#.ROOT">ROOT</a></li>
-            
-                <li data-name="LEDController#brightness"><a href="LEDController.html#brightness">brightness</a></li>
-            
-                <li data-name="LEDController#id"><a href="LEDController.html#id">id</a></li>
-            
-                <li data-name="LEDController#location"><a href="LEDController.html#location">location</a></li>
-            
-                <li data-name="LEDController#triggers"><a href="LEDController.html#triggers">triggers</a></li>
-            
-            </ul>
-            <ul class="typedefs itemMembers">
-            
-            <span class="subtitle">Typedefs</span>
-            
-                <li data-name="LEDController.Blink"><a href="LEDController.html#.Blink">Blink</a></li>
-            
-                <li data-name="LEDController.Parser"><a href="LEDController.html#.Parser">Parser</a></li>
-            
-            </ul>
-            <ul class="methods itemMembers">
-            
-            <span class="subtitle">Methods</span>
-            
-                <li data-name="LEDController.discover"><a href="LEDController.html#.discover">discover</a></li>
-            
-                <li data-name="LEDController.register"><a href="LEDController.html#.register">register</a></li>
-            
-                <li data-name="LEDController#blink"><a href="LEDController.html#blink">blink</a></li>
-            
-                <li data-name="LEDController#morse"><a href="LEDController.html#morse">morse</a></li>
-            
-                <li data-name="LEDController#reset"><a href="LEDController.html#reset">reset</a></li>
-            
-                <li data-name="LEDController#setBrightness"><a href="LEDController.html#setBrightness">setBrightness</a></li>
-            
-                <li data-name="LEDController#toString"><a href="LEDController.html#toString">toString</a></li>
-            
-                <li data-name="LEDController#trigger"><a href="LEDController.html#trigger">trigger</a></li>
-            
-                <li data-name="LEDController#turnOff"><a href="LEDController.html#turnOff">turnOff</a></li>
-            
-                <li data-name="LEDController#turnOn"><a href="LEDController.html#turnOn">turnOn</a></li>
-            
-                <li data-name="LEDController#valueOf"><a href="LEDController.html#valueOf">valueOf</a></li>
-            
-            </ul>
-            <ul class="events itemMembers">
-            
-            </ul>
-        </li>
-    
-    </ul>
-</div>
-    <div class="main">
-        <h1 class="page-title" data-filename="index.html">Index</h1>
-        
+
 
 
     
@@ -116,13 +35,15 @@
 
 
 
+
+
     
 
 
 
 
     <section>
-        <article class="readme"><h1>ledctl</h1><p><a href="https://npmjs.org/package/ledctl"><img src="https://badge.fury.io/js/ledctl.svg" alt="NPM Version"></a>
+        <article><h1>ledctl</h1><p><a href="https://npmjs.org/package/ledctl"><img src="https://badge.fury.io/js/ledctl.svg" alt="NPM Version"></a>
 <a href="https://travis-ci.org/Dreamscapes/ledctl"><img src="https://travis-ci.org/Dreamscapes/ledctl.svg" alt="Build Status"></a>
 <a href="https://coveralls.io/r/Dreamscapes/ledctl"><img src="https://img.shields.io/coveralls/Dreamscapes/ledctl.svg" alt="Coverage Status"></a>
 <img src="https://img.shields.io/badge/built%20with-GNU%20Make-brightgreen.svg" alt="Built with GNU Make"></p>
@@ -177,8 +98,8 @@ led
   // Read: blink for zero percent of 5000 milliseconds
   .blink({ for: 0, of: 5000 })
   .trigger('mmc0')</code></pre><p>Notice that the LED will process the events exactly in the order as you called the functions.</p>
-<h3>Emptying the blink queue</h3><p>Sometimes it might be necessary to cancel any scheduled blink events and put the LED into an idle state - to do that, simply call <code>.reset()</code>:</p>
-<pre class="prettyprint source lang-js"><code>led.morse('no one will see me :(').reset()</code></pre><p>However, any callbacks associated with the cancelled blink events will be cancelled, too.</p>
+<h3>Emptying the blink queue</h3><p>Sometimes it might be necessary to cancel any scheduled blink events and put the LED into an idle (off) state - to do that, simply call <code>.reset()</code>:</p>
+<pre class="prettyprint source lang-js"><code>led.morse('no one will see me :(').reset()</code></pre><p>However, any callbacks associated with the cancelled blink events will be cancelled, too. Any blink events that you schedule afterwards will be processed as usual.</p>
 <h2>Extending the API</h2><p>You may want to implement your own method that takes arbitrary input and generates (or not) photons via your LED! For example, you may want to take a Buffer and turn the LED on every time the bits change... Or take a string and blink when there's a vowel... Or whatever - you can do it all!</p>
 <p>It's rather simple - first, you need to write your <strong>serialiser</strong>. A serialiser takes one argument - an input value (this is what should be converted to blink events - most likely some kind of string) and returns an array of <em>Blink</em> objects. A <em>Blink</em> object describes how long a LED should be on and how long it should be off during a single event.</p>
 <p>I highly suggest that you take a look at how the morse code method is implemented in <em>serialisers/morse.js</em>.</p>
@@ -192,15 +113,19 @@ led
 
 
 
-        
-
-        <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha13</a> on Tue Dec 30 2014 18:13:43 GMT+0000 (UTC)
-        </footer>
-    </div>
 </div>
-<script>prettyPrint();</script>
-<script src="scripts/linenumber.js"></script>
-<script src="scripts/main.js"></script>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="LEDController.html">LEDController</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Fri Feb 20 2015 09:12:49 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
 </body>
 </html>
