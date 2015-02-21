@@ -372,7 +372,6 @@ describe('LEDController', function () {
         err.should.be.an.Error
         err.message.should.containEql('Unsupported trigger')
 
-        d.dispose()
         done()
       })
 
