@@ -111,8 +111,7 @@ describe('LEDController', function () {
 
   describe('property:brightness', function () {
 
-    beforeEach(restoreBrightness)
-    after(restoreBrightness)
+    afterEach(restoreBrightness)
 
     it('should have property min and equal 0', function () {
 
@@ -167,7 +166,6 @@ describe('LEDController', function () {
   describe('property:triggers', function () {
 
     afterEach(restoreTriggers)
-    after(restoreTriggers)
 
     it('should have property all and equal to /trigger', function () {
       ledGreen.triggers.all.should.containDeep(knownTriggers)
@@ -333,8 +331,7 @@ describe('LEDController', function () {
 
   describe('.trigger()', function () {
 
-    beforeEach(restoreTriggers)
-    after(restoreTriggers)
+    afterEach(restoreTriggers)
 
     it('should write the desired trigger to /trigger', function (done) {
       ledGreen.trigger('default-on', function () {
@@ -379,8 +376,7 @@ describe('LEDController', function () {
 
   describe('.turnOn() / .turnOff()', function () {
 
-    beforeEach(restoreBrightness)
-    after(restoreBrightness)
+    afterEach(restoreBrightness)
 
     it('.turnOn() should write to /brightness its maximum brightness', function (done) {
       ledGreen.turnOn(function () {
@@ -413,8 +409,7 @@ describe('LEDController', function () {
 
   describe('.setBrightness()', function () {
 
-    beforeEach(restoreBrightness)
-    after(restoreBrightness)
+    afterEach(restoreBrightness)
 
     it('should write to /brightness the desired brightness', function (done) {
       ledGreen.setBrightness(100, function () {
