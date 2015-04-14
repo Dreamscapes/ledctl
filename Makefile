@@ -46,10 +46,9 @@ all: install lint test coverage docs
 install:
 	@npm install
 
-# Lint all js files (configuration available in .jshintrc)
+# Lint all js files (configuration available in .eslintrc)
 lint:
-	@$(BIN)jshint $(LIBDIR) $(TSTDIR) $(BENCHDIR) \
-		--reporter node_modules/jshint-stylish/stylish.js
+	@$(BIN)eslint $(LIBDIR) $(TSTDIR)
 
 # Run tests using Mocha
 test:

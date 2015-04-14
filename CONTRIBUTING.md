@@ -2,7 +2,7 @@
 
 ## Run the linter
 
-Always check if your code passes **jshint** linting: `make lint`
+Always check if your code passes **eslint** linting: `make lint`
 
 ## Make use of .editorconfig
 

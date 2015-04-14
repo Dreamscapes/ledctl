@@ -10,9 +10,6 @@
  * @license    http://choosealicense.com/licenses/BSD-3-Clause  BSD-3-Clause License
  */
 
-// Make jshint play nicely with should.js
-/* jshint expr: true */
-
 'use strict'
 
 var fs = require('fs')
