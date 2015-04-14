@@ -40,7 +40,7 @@
     "terminal"
   ],
   "license": "BSD-3-Clause",
-  "main": "index.js",
+  "main": "lib/ledcontroller",
   "os": [
     "linux"
   ],
