@@ -16,24 +16,23 @@ var fs = require('fs')
   , path = require('path')
   , domain = require('domain')
   , LEDController = require('../lib/ledcontroller')
-// List of some triggers usually found on LEDs
+  // List of some triggers usually found on LEDs
   , knownTriggers =
     [ 'none'
     , 'timer'
     , 'heartbeat'
     , 'default-on'
     ]
-  , led // Used for ad-hoc object construction
+  , led   // Used for ad-hoc object construction
   , ledGreen
-  , ledRed
 
 // Get the path to given file belonging, optionally, to the specified LED (otherwise the green
 // one is used)
-function pathTo(file, led) {
+function pathTo (file, ledId) {
 
-  led = led || 'green:led0'
+  ledId = ledId || 'green:led0'
 
-  return path.join(__dirname, 'fakeleds', led, file)
+  return path.join(__dirname, 'fakeleds', ledId, file)
 }
 
 // Helper function that restores the /triggers file to a known state
@@ -57,19 +56,18 @@ describe('LEDController', function () {
     // Override the default root path for LEDs so we can predictably test this thing...
     LEDController.ROOT = path.join(__dirname, 'fakeleds')
     ledGreen = new LEDController('green:led0')
-    ledRed = new LEDController('red:led1')
   })
 
   it('should throw when more LEDs are available and no identifier given', function () {
-    (function () {
+    void function () {
       led = new LEDController()
-    }).should.throw()
+    }.should.throw()
   })
 
   it('should throw when trying to control non-existent LED', function () {
-    (function () {
+    void function () {
       led = new LEDController('ifeellucky')
-    }).should.throw()
+    }.should.throw()
   })
 
   it('should not throw when only one LED is available and no identifier given', function () {
@@ -131,7 +129,7 @@ describe('LEDController', function () {
 
       ledGreen.brightness.max
         .should.be.Number
-        .and.equal(parseInt(contents))
+        .and.equal(Number.parseInt(contents))
     })
 
     it('should have property cur and equal to /brightness', function () {
@@ -142,11 +140,11 @@ describe('LEDController', function () {
 
       ledGreen.brightness.cur
         .should.be.Number
-        .and.equal(parseInt(contents))
+        .and.equal(Number.parseInt(contents))
     })
 
     it('should reflect runtime changes in brightness.cur', function () {
-      var original = parseInt(fs.readFileSync(
+      var original = Number.parseInt(fs.readFileSync(
         pathTo('brightness')
       , 'utf8'
       ).trim())
@@ -179,7 +177,7 @@ describe('LEDController', function () {
       var current = '[' + ledGreen.triggers.cur + ']'
         , contents = fs.readFileSync(pathTo('trigger'), 'utf8')
 
-      contents.indexOf(current).should.not.equal(-1)
+      contents.indexOf(current).should.not.equal(- 1)
     })
 
     it('should reflect runtime changes in triggers.cur', function () {
@@ -217,10 +215,10 @@ describe('LEDController', function () {
     it('should not throw when no LEDs are available and return empty array', function () {
       var retVal
 
-      (function () {
+      void function () {
         LEDController.ROOT = '/some/random/junk'
         retVal = LEDController.discover()
-      }).should.not.throw()
+      }.should.not.throw()
 
       retVal.should.be.empty
     })
@@ -235,27 +233,27 @@ describe('LEDController', function () {
     })
 
     it('should accept functions as handlers', function () {
-      (function () {
+      void function () {
         LEDController.register('dummymethod', function () {})
-      }).should.not.throw()
+      }.should.not.throw()
     })
 
     it('should throw on handlers not being functions', function () {
-      (function () {
+      void function () {
         LEDController.register('dummymethod', 'ladida')
-      }).should.throw()
+      }.should.throw()
 
-      ;(function () {
+      void function () {
         LEDController.register('dummymethod', 42)
-      }).should.throw()
+      }.should.throw()
 
-      ;(function () {
+      void function () {
         LEDController.register('dummymethod', undefined)
-      }).should.throw()
+      }.should.throw()
     })
 
     it('should put the handler onto the prototype', function () {
-      var handler = function () {}
+      function handler () {}
 
       LEDController.register('dummymethod', handler)
 
@@ -266,17 +264,17 @@ describe('LEDController', function () {
 
     it('should throw when attempting to register the same handler more than once', function () {
       // This should pass - registering it for the first time...
-      (function () {
+      void function () {
         LEDController.register('dummymethod', function () {})
-      }).should.not.throw()
+      }.should.not.throw()
       // And here it should throw
-      ;(function () {
+      void function () {
         LEDController.register('dummymethod', function () {})
-      }).should.throw()
+      }.should.throw()
     })
 
     it('should call the handler when calling the attached method', function (done) {
-      var handler = function (input) {
+      function handler (input) {
         input.should.equal('test')
 
         setImmediate(done)
@@ -310,9 +308,9 @@ describe('LEDController', function () {
         throw new Error('test')
       })
 
-      ;(function () {
+      void function () {
         ledGreen.dummymethod('input')
-      }).should.throw('test')
+      }.should.throw('test')
     })
 
     it('should call the callback only once, even if more blinks are in queue', function (done) {
@@ -400,7 +398,7 @@ describe('LEDController', function () {
 
     it('.turnOff() should write to /brightness 0', function (done) {
       ledGreen.turnOff(function () {
-        var contents = parseInt(fs.readFileSync(pathTo('brightness'), 'utf8').trim())
+        var contents = Number.parseInt(fs.readFileSync(pathTo('brightness'), 'utf8').trim())
 
         contents.should.equal(0)
         done()
@@ -436,7 +434,7 @@ describe('LEDController', function () {
     })
 
     it('should prevent negative brightness and set it to 0', function (done) {
-      ledGreen.setBrightness(-10, function () {
+      ledGreen.setBrightness(- 10, function () {
 
         ledGreen.brightness.cur.should.equal(0)
         done()
