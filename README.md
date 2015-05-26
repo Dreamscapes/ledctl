@@ -3,6 +3,7 @@
 [![NPM Version][npm-badge]][npm-url]
 [![Build Status][travis-badge]][travis-url]
 [![Coverage Status][coveralls-badge]][coveralls-url]
+[![Documentation Status][inch-badge]][inch-url]
 ![Built with GNU Make][make-badge]
 
 > Control your LEDs from Node.js
@@ -115,5 +116,7 @@ This software is licensed under the **BSD-3-Clause License**. See the [LICENSE](
 [travis-url]: https://travis-ci.org/Dreamscapes/ledctl
 [coveralls-badge]: https://img.shields.io/coveralls/Dreamscapes/ledctl.svg
 [coveralls-url]: https://coveralls.io/r/Dreamscapes/ledctl
+[inch-badge]: http://inch-ci.org/github/dreamscapes/ledctl.svg
+[inch-url]: http://inch-ci.org/github/dreamscapes/ledctl
 [make-badge]: https://img.shields.io/badge/built%20with-GNU%20Make-brightgreen.svg
 [api-docs]: http://dreamscapes.github.io/ledctl
