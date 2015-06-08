@@ -477,7 +477,20 @@ describe('LEDController', function () {
 
   describe('.blink()', function () {
 
-    // TODO
+    it('should push the blink event to the blinker queue', function (done) {
+      var blink = { of: 0 }
+
+      ledGreen.blinker.push = function (item) {
+        item.should.be.exactly(blink)
+        setImmediate(done)
+      }
+
+      ledGreen.blink(blink)
+    })
+
+    it('should return this', function (done) {
+      ledGreen.blink({ of: 0 }, done).should.be.exactly(ledGreen)
+    })
   })
 
 
