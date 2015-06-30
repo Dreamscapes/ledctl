@@ -100,7 +100,7 @@ describe('LEDController', function () {
 
     it('should be combination of LEDController.ROOT and LED\'s identifier', function () {
       ledGreen.location
-        .should.be.String
+        .should.be.String()
         .and.equal(path.join(LEDController.ROOT, 'green:led0'))
     })
   })
@@ -112,7 +112,7 @@ describe('LEDController', function () {
     it('should have property min and equal 0', function () {
 
       ledGreen.brightness.min
-        .should.be.Number
+        .should.be.Number()
         .and.equal(0)
     })
 
@@ -123,7 +123,7 @@ describe('LEDController', function () {
       ).trim()
 
       ledGreen.brightness.max
-        .should.be.Number
+        .should.be.Number()
         .and.equal(Number.parseInt(contents))
     })
 
@@ -134,7 +134,7 @@ describe('LEDController', function () {
       ).trim()
 
       ledGreen.brightness.cur
-        .should.be.Number
+        .should.be.Number()
         .and.equal(Number.parseInt(contents))
     })
 
@@ -193,7 +193,7 @@ describe('LEDController', function () {
       var contents = fs.readdirSync(LEDController.ROOT)
 
       LEDController.discover()
-        .should.be.Array
+        .should.be.Array()
         .and.containDeep(contents)
     })
 
@@ -202,7 +202,7 @@ describe('LEDController', function () {
 
       // There are no real LEDs in the test folder!
       LEDController.discover()
-        .should.be.Array
+        .should.be.Array()
         .and.have.lengthOf(0)
     })
 
@@ -252,7 +252,7 @@ describe('LEDController', function () {
       LEDController.register('dummymethod', handler)
 
       LEDController.prototype.dummymethod
-        .should.be.a.Function
+        .should.be.Function()
         .and.should.not.equal(handler)    // Because we wrap it in our own function
     })
 
@@ -357,7 +357,7 @@ describe('LEDController', function () {
       var d = domain.create()
 
       d.on('error', function (err) {
-        err.should.be.an.Error
+        err.should.be.Error()
         err.message.should.containEql('Unsupported trigger')
 
         done()
